@@ -22,6 +22,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@babel/runtime": "^7.18.0",
+    "@elrondnetwork/elrond-core-js": "^2.1.0",
     "@elrondnetwork/erdjs": "^10.2.5",
     "@elrondnetwork/erdjs-network-providers": "^0.1.5",
     "@nestjs/common": "^8.0.0",
@@ -31,8 +33,12 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.4",
+    "add": "^2.0.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "csurf": "^1.11.0",
+    "helmet": "^5.1.0",
+    "npm": "^8.10.0",
     "passport": "^0.5.3",
     "passport-headerapikey": "^1.2.2",
     "pg": "^8.7.3",
