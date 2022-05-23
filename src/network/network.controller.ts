@@ -1,17 +1,21 @@
 import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
 import { ApiNetworkProvider } from "@elrondnetwork/erdjs-network-providers";
 import { Account, Address } from '@elrondnetwork/erdjs/out';
+import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Elrond Network')
 @Controller('network')
 export class NetworkController {
 
     private networkProvider = new ApiNetworkProvider("https://devnet-api.elrond.com");
 
+    @ApiOperation({ summary: 'Fetches the current Elrond network parameters.' })
     @Get('')
     async fetchNetworkData() {
         return await this.networkProvider.getNetworkConfig();
     }
 
+    @ApiOperation({ summary: 'Fetches the account details for an address.' })
     @Get(':wallet_address')
     async fetchAccountDetails(@Param('wallet_address') wallet_address: string) {
         try {
