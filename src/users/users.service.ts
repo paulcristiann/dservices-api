@@ -11,6 +11,10 @@ export class UsersService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async create(createUserDto: CreateUserDto) {
+    if(createUserDto.nickname == ""){
+      createUserDto.nickname = "Anonymous";
+    }
+    console.log(createUserDto)
     const user = this.userRepository.create(createUserDto);
     await this.userRepository.save(createUserDto);
     return user;
@@ -28,7 +32,7 @@ export class UsersService {
     });
     
     if (!user) {
-      throw new NotFoundException('user not foud');
+      throw new NotFoundException('User not found');
     }
     return user;
   }
@@ -41,7 +45,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotFoundException('user not foud');
+      throw new NotFoundException('User not found');
     }
 
     await this.userRepository.update({ wallet_address }, updateUserDto);
