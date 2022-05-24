@@ -1,9 +1,13 @@
 import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
 import { ApiNetworkProvider } from "@elrondnetwork/erdjs-network-providers";
 import { Account, Address } from '@elrondnetwork/erdjs/out';
-import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiProduces, ApiTags, ApiHeader } from '@nestjs/swagger';
 
 @ApiTags('Elrond Network')
+@ApiHeader({
+    name: 'x-api-key',
+    description: 'The API Key of the frontend application',
+  })
 @Controller('network')
 export class NetworkController {
 
