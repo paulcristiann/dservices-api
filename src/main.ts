@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('D-Services REST API')
-    .setDescription('The API for the ICI D-Services Platform')
+    .setDescription('The API for the ICI D-Services Platform\n\n Use this key: <strong>1fa544cc-39d8-402c-8459-746f994c5400</strong>')
     .setVersion('1.0')
     .build();
 
