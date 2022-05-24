@@ -1,14 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, PrimaryColumn, CreateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    //@PrimaryGeneratedColumn()
+    //id: number;
 
-    @Column({ unique: true })
+    @PrimaryColumn()
     @ApiProperty({
         description: 'The bech32 wallet address of the user',
     })
@@ -20,4 +20,10 @@ export class User {
         required: false
     })
     nickname: string;
+
+    @CreateDateColumn()
+    @ApiProperty({
+        description: 'User registration date',
+    })
+    date_joined: string;
 }
