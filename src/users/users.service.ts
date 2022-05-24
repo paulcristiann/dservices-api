@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { bech32 } from '@elrondnetwork/transaction-decoder/node_modules/bech32'
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,12 @@ export class UsersService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async create(createUserDto: CreateUserDto) {
+    try {
+      const check = await bech32.decode(createUserDto.wallet_address)
+    }catch (error) {
+      throw new BadRequestException('invalid wallet')
+    }
+
     if(createUserDto.nickname == ""){
       createUserDto.nickname = "Anonymous";
     }
