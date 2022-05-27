@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { bech32 } from '@elrondnetwork/transaction-decoder/node_modules/bech32'
+import { json } from 'stream/consumers';
 
 @Injectable()
 export class UsersService {
@@ -13,11 +14,10 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const check = await bech32.decode(createUserDto.wallet_address)
+      await bech32.decode(createUserDto.wallet_address)
     }catch (error) {
       throw new BadRequestException('invalid wallet')
     }
-
     if(createUserDto.nickname == ""){
       createUserDto.nickname = "Anonymous";
     }
@@ -37,9 +37,10 @@ export class UsersService {
         wallet_address: wallet_address,
       },
     });
-    
     if (!user) {
-      throw new NotFoundException('User not found');
+      //throw new NotFoundException('User not found');
+      //return JSON.parse('{"wallet_address": "", "nickname": ""}')
+      return {wallet_address: "", nickname: "", notExist: true};
     }
     return user;
   }
